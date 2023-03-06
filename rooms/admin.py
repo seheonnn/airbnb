@@ -46,12 +46,12 @@ class RoomAdmin(admin.ModelAdmin):
     # 관리자 패널에 검색 기능 추가
     # default는 __contains로 검색
     search_fields = (
-        # "name",
-        # "price",
+        "name",
+        "^price",
         # "^name", # __startswith
         # "=price", # 100% 동일한 값 검색
 
-        "owner__username", # owner -> User.username 으로 검색, ^, = 모두 적용 가능
+        "=owner__username", # owner -> User.username 으로 검색, ^, = 모두 적용 가능
     )
 
 @admin.register(Amenity)
