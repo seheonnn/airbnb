@@ -37,9 +37,27 @@ class Room(CommonModel):
     def __str__(self):
         return self.name
 
-    def total_amenities(self):
+    # models.py에 추가된 메소드는 관리자 패널 외에 다른 곳에서도 사용 가능함.
+    def total_amenities(self):  # def total_amenities(room): 동일
         # print(self.amenities.all())
         return self.amenities.count()
+
+    def rating(room):
+        count = room.reviews.count()
+        if count == 0:
+            return "No Reviews"
+        else:
+            total_rating=0
+            # for review in room.reviews.all():
+            #     total_rating += review.rating
+            # return round(total_rating / count, 2)
+
+            print(room.reviews.all().values("rating"))
+            print(room.reviews.all())
+            # 최적화
+            for review in room.reviews.all().values("rating"):
+                total_rating += review["rating"]
+            return round(total_rating / count, 2)
 
 class Amenity(CommonModel):
 
