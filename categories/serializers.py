@@ -19,3 +19,13 @@ class CategorySerializer(serializers.Serializer):
             # kind=validated_data['kind']
             **validated_data
         )
+
+
+    def update(self, instance, validated_data): # instance:category의 값, validated_data:사용자 값
+        # 비효율적
+        # if validated_data['name']:
+        #     instance.name = validated_data['name']
+        instance.name = validated_data.get('name', instance.name) # 두 번째 값은 default
+        instance.kind = validated_data.get('kind', instance.kind)
+        instance.save()
+        return instance # create 처럼 객체 return
