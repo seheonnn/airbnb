@@ -21,4 +21,5 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("rooms/", include("rooms.urls")), # rooms/로 접근하면 rooms 파일의 urls.py로 이동
+    path("categories/", include("categories.urls")),
 ]
