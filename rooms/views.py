@@ -49,7 +49,7 @@ class AmenityDetail(APIView):
         serializer = AmenitySerializer(amenity)
         return Response(serializer.data)
 
-    def post(self, request, pk):
+    def put(self, request, pk):
         amenity = self.get_object(pk)
         serializer = AmenitySerializer(amenity, data=request.data, partial=True) # DB 내 업데이트 대상, 사용자가 보낸 data, partial=
         if serializer.is_valid():
