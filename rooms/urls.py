@@ -6,6 +6,8 @@ urlpatterns = [
     # # <넘길 파라미터 타임 : 넘길 파라미터 이름>
     # path("<int:room_pk>", views.see_one_room),
 
+    path("", views.Rooms.as_view()),
+    path("<int:pk>", views.RoomDetail.as_view()),
     path("amenities/", views.Amenities.as_view()),
     path("amenities/<int:pk>", views.AmenityDetail.as_view()),
 ]

@@ -31,17 +31,27 @@ from .models import Category
 #         return instance # create 처럼 객체 return
 
 # ==================== serializers.py V2 ==================================
+# class CategorySerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Category
+#
+#         # Category의 모든 필드를 다 보여줌
+#         fields = ("__all__")
+#
+#         # Category의 필드들 중에서 무엇을 보일지 선택
+#         # fields = ("name", "kind",)
+#
+#         # Category의 필드들 중에서 무엇을 숨길지 선택
+#         # exclude = ("created_at",)
+#
+#         # 나중에 필요에 따라 create나 update는 수정할 수도 있음
+
+
+# ==================== serializers.py V3 ==================================
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-
-        # Category의 모든 필드를 다 보여줌
-        fields = ("__all__")
-
-        # Category의 필드들 중에서 무엇을 보일지 선택
-        # fields = ("name", "kind",)
-
-        # Category의 필드들 중에서 무엇을 숨길지 선택
-        # exclude = ("created_at",)
-
-        # 나중에 필요에 따라 create나 update는 수정할 수도 있음
+        fields = (
+            "name",
+            "kind",
+        )
