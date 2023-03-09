@@ -21,13 +21,13 @@ class AmenitySerializer(serializers.ModelSerializer):
 class RoomDetailSerializer(serializers.ModelSerializer):
 
     owner = TinyUserSerializer(read_only=True)
-    amenities = AmenitySerializer(read_only=True, many=True) # amenity 여러 개 many= 추가
+    # amenities = AmenitySerializer(read_only=True, many=True) # amenity 여러 개 many= 추가
     category = CategorySerializer(read_only=True)
 
     # rating 값을 return하는 method를 만들 것임.
     rating = serializers.SerializerMethodField()
     is_owner = serializers.SerializerMethodField() # 인스타그램에서 is_liked(좋아요)로 사용, 값에 따라 빨간 하트, 빈 하트
-    reviews = ReviewSerializer(many=True, read_only=True)
+    # reviews = ReviewSerializer(many=True, read_only=True)
 
 
     class Meta:
