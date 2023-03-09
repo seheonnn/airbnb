@@ -161,3 +161,48 @@ class RoomDetail(APIView):
             raise PermissionDenied
         room.delete()
         return Response(status=HTTP_204_NO_CONTENT)
+
+from reviews.serializers import ReviewSerializer
+class RoomReviews(APIView):
+    def get_object(self, pk):
+        try:
+            return Room.objects.get(pk=pk)
+        except Room.DoesNotExist:
+            return NotFound
+    def get(self, request, pk):
+        try:
+            # print(request.query_params)
+            page = request.query_params.get('page', 1) # default = 1
+            # print(type(page))
+            page = int(page)
+        except ValueError:
+            page = 1 # page가 숫자가 아닌 값이 들어오면 page=1
+        page_size = 3
+        start = (page - 1) * page_size
+        end = start + page_size
+        room = self.get_object(pk)
+        serializer = ReviewSerializer(
+            room.reviews.all()[start:end], # start에서 end-1까지만 반환
+            many=True,
+        )
+        return Response(serializer.data)
+
+
+class RoomAmenities(APIView):
+    def get_object(self, pk):
+        try:
+            return Room.objects.get(pk=pk)
+        except Room.DoesNotExist:
+            return NotFound
+    def get(self, request, pk):
+        try:
+            page = request.query_params.get('page', 1)
+            page = int(page)
+        except ValueError:
+            page = 1
+        page_size = 3
+        start = (page - 1) * page_size
+        end = start + page_size
+        room = self.get_object(pk)
+        serializer = AmenitySerializer(room.amenities.all()[start:end], many=True,)
+        return Response(serializer.data)
