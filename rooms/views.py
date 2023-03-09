@@ -70,7 +70,7 @@ class AmenityDetail(APIView):
 class Rooms(APIView):
     def get(self, request):
         all_rooms = Room.objects.all()
-        serializer = RoomListSerializer(all_rooms, many=True)
+        serializer = RoomListSerializer(all_rooms, many=True, context={'request':request})
         return Response(serializer.data)
 
     def post(self, request):
@@ -113,7 +113,7 @@ class RoomDetail(APIView):
 
     def get(self, request, pk):
         room = self.get_object(pk)
-        serializer = RoomDetailSerializer(room)
+        serializer = RoomDetailSerializer(room, context={'request':request}) # context= 를 통해 데이터를 직접 넘길 수도 있음
         return Response(serializer.data)
 
     def put(self, request, pk):
