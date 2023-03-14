@@ -232,3 +232,47 @@ class ExperienceBookings(APIView):
             return Response(serializer.data)
         else:
             return Response(serializer.errors)
+
+# api/v1/experiences/1/bookings/1
+class ExperienceBookingDetail(APIView):
+
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
+    def get_booking(self, booking_pk):
+        try:
+            return Booking.objects.get(pk=booking_pk)
+        except Booking.DoesNotExist:
+            return NotFound
+    def get_experience(self, pk):
+        try:
+            return Experience.objects.get(pk=pk)
+        except Experience.DoesNotExist:
+            return NotFound
+    def get(self, request, pk, booking_pk):
+        booking = self.get_booking(booking_pk)
+        experience = self.get_experience(pk)
+        if booking.experience == experience:
+            serializer = PublicBookingSerializer(booking)
+            return Response(serializer.data)
+        else:
+            return Response(status=HTTP_204_NO_CONTENT)
+    def put(self, request, pk, booking_pk):
+        booking = self.get_booking(booking_pk)
+        experience = self.get_experience(pk)
+        if booking.user != request.user or booking.experience != experience:
+            raise PermissionDenied
+
+        serializer = CreateExperienceBookingSerializer(booking, data=request.data, partial=True)
+        if serializer.is_valid():
+            booking = serializer.save()
+            serializer = PublicBookingSerializer(booking)
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors)
+    def delete(self, request, pk, booking_pk):
+        booking = self.get_booking(booking_pk)
+        experience = self.get_experience(pk)
+        if booking.user != request.user or booking.experience != experience:
+            raise PermissionDenied
+        booking.delete()
+        return Response(status=HTTP_204_NO_CONTENT)

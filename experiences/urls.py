@@ -10,4 +10,5 @@ urlpatterns = [
     path("<int:pk>/reviews", views.ExperienceReviews.as_view()),
     path("<int:pk>/perks", views.ExperiencePerks.as_view()),
     path("<int:pk>/bookings", views.ExperienceBookings.as_view()),
+    path("<int:pk>/bookings/<int:booking_pk>", views.ExperienceBookingDetail.as_view()),
 ]

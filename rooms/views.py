@@ -328,7 +328,8 @@ class RoomBookingDelete(APIView):
     def delete(self, request, pk, booking_pk):
         room = Room.objects.get(pk=pk)
         booking = self.get_object(booking_pk)
-        if booking.user != request.user and booking.room == room:
+        # if booking.user != request.user and booking.room == room:
+        if booking.user != request.user or booking.room != room:
             raise PermissionDenied
         booking.delete()
         return Response(status=HTTP_204_NO_CONTENT)
