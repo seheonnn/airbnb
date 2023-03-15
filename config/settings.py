@@ -28,7 +28,8 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 THIRD_PARTY_APPS = [
-    "rest_framework"
+    "rest_framework",
+    "strawberry.django"
 ]
 
 # Application definition
