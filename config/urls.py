@@ -23,7 +23,7 @@ from django.conf import settings
 
 # GraphQL
 from strawberry.django.views import GraphQLView
-from .schema import schema
+from config.strawberryGraphQL.schema import schema
 
 urlpatterns = [
     path('admin/', admin.site.urls),
