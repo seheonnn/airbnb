@@ -29,6 +29,7 @@ ALLOWED_HOSTS = []
 
 THIRD_PARTY_APPS = [
     "rest_framework",
+    "rest_framework.authtoken", # V2 auth
     "strawberry.django"
 ]
 
@@ -149,3 +150,13 @@ MEDIA_ROOT = "uploads" # /필요 없음
 MEDIA_URL = "user-uploads/" # /로 끝나야 함
 
 PAGE_SIZE = 3
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        # "rest_framework.authentication.BasicAuthentication", # 로그인 요청
+        "rest_framework.authentication.SessionAuthentication", # default authentication
+        "config.authentication.TrustMeBroAuthentication", # V1 auth
+        "rest_framework.authentication.TokenAuthentication", # V2 auth admin 패널에 Token 생기고 저장
+        "config.authentication.JWTAuthentication", # V3 JWT
+    ]
+}

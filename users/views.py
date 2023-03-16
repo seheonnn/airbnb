@@ -12,6 +12,9 @@ from reviews.models import Review
 from reviews.serializers import UserReviewSerializer
 from . import serializers
 from .models import User
+from django.conf import settings
+
+import jwt
 
 # api/v1/users/me
 class Me(APIView):
@@ -86,7 +89,7 @@ class LogIn(APIView):
         password = request.data.get('password')
         if not username or not password:
             raise ParseError
-        user = authenticate(request, username=username, password=password) # username, password가 일치하면 user 반환
+        user = authenticate(request, username=username, password=password) # username, password가 일치하면 user 객체 반환
         if user:
             login(request, user) # user 정보가 담긴 session 생성, 사용자에게 cookie를 보내줌
             return Response({"ok": "Welcome!"})
@@ -123,3 +126,17 @@ class ShowReviews(APIView):
             return Response(serializer.data)
         else:
             raise ParseError(f"{username} does not have any reviews.")
+
+# V3 JWT 암호화
+class JWTLogIn(APIView):
+    def post(self, request):
+        username = request.data.get('username')
+        password = request.data.get('password')
+        if not username or not password:
+            raise ParseError
+        user = authenticate(request, username=username, password=password)  # username, password가 일치하면 user 객체 반환
+        if user:
+            token = jwt.encode({"pk": user.pk}, settings.SECRET_KEY, algorithm="HS256") # JWT token 발급
+            return Response({"token": token})
+        else:
+            return Response({"error": "wrong password"})
