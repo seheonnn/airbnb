@@ -6,8 +6,8 @@ from django.utils import timezone
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.exceptions import NotFound, NotAuthenticated, ParseError, PermissionDenied
-from rest_framework.status import HTTP_204_NO_CONTENT
+from rest_framework.exceptions import NotFound, ParseError, PermissionDenied
+from rest_framework.status import HTTP_204_NO_CONTENT, HTTP_400_BAD_REQUEST
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 # IsAutheticatedOrReadOnly는 만약 요청이 GET이라면 누구나 통과할 수 있게 해줌. 하지만 만약 요청이 POST, PUT, DELETE라면 오직 인증받는 사람들만 통과할 수 있음.
 
@@ -46,7 +46,7 @@ class Amenities(APIView):
             amenity = serializer.save()
             return Response(AmenitySerializer(amenity).data)
         else:
-            return Response(serializer.errors)
+            return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
 # api/v1/rooms/amenities/1
 class AmenityDetail(APIView):
 
@@ -67,7 +67,7 @@ class AmenityDetail(APIView):
             updated_amenity = serializer.save()
             return Response(AmenitySerializer(updated_amenity).data)
         else:
-            return Response(serializer.errors)
+            return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk):
         amenity = self.get_object(pk)
