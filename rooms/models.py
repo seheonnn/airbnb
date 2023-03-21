@@ -47,7 +47,7 @@ class Room(CommonModel):
         if count == 0:
             return 0
         else:
-            total_rating=0
+            # total_rating = 0
             # for review in room.reviews.all():
             #     total_rating += review.rating
             # return round(total_rating / count, 2)
@@ -56,6 +56,7 @@ class Room(CommonModel):
             # print(room.reviews.all())
 
             # 최적화
+            total_rating = 0
             for review in room.reviews.all().values("rating"):
                 total_rating += review["rating"]
             return round(total_rating / count, 2)

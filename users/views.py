@@ -120,7 +120,7 @@ class ShowRooms(APIView):
 # api/v1/users/@seheon/reviews
 class ShowReviews(APIView):
     def get(self, request, username):
-        reviews = Review.objects.filter(user__username=username)
+        reviews = Review.objects.filter(user__username=username).order_by("-created_at")
         if reviews:
             serializer = UserReviewSerializer(reviews, many=True)
             return Response(serializer.data)

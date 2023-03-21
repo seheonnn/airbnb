@@ -1,4 +1,7 @@
 from rest_framework import serializers
+
+from experiences.models import Experience
+from rooms.models import Room
 from .models import Review
 from users.serializers import TinyUserSerializer
 
@@ -11,11 +14,16 @@ class ReviewSerializer(serializers.ModelSerializer):
 
 class UserReviewSerializer(serializers.ModelSerializer):
 
-    room_name = serializers.SerializerMethodField()
+    name = serializers.SerializerMethodField()
 
     class Meta:
         model = Review
-        fields = ("room_name", "payload", "rating")
+        fields = ("name", "rating", "payload")
 
-    def get_room_name(self, review):
-        return review.room.name
+    def get_name(self, review):
+        if review.room:
+            name = Room.objects.get(name=review.room).name
+        else:
+            name = Experience.objects.get(name=review.experience).name
+        return name
+
