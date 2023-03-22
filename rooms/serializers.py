@@ -51,8 +51,10 @@ class RoomDetailSerializer(serializers.ModelSerializer):
 
     def get_is_liked(self, room):
         request = self.context['request']
-        # 해당 user가 만든 wishlist에 room.pk와 동일한 room들을 찾음
-        return Wishlist.objects.filter(user=request.user, rooms__pk=room.pk).exists() # wishlist와 room은 ManyToMany 관계
+        if request.user.is_authenticated:
+            # 해당 user가 만든 wishlist에 room.pk와 동일한 room들을 찾음
+            return Wishlist.objects.filter(user=request.user, rooms__pk=room.pk).exists() # wishlist와 room은 ManyToMany 관계
+        return False
         # return Wishlist.objects.filter(user=request.user, rooms__name=room.name).exists() # 이름으로 찾기도 가능
 
 
