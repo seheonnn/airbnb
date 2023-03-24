@@ -25,4 +25,6 @@ urlpatterns = [
     # V3 JWT
     path("jwt-login", views.JWTLogIn.as_view()),
 
+    path("github", views.GithubLogIn.as_view()),
+
 ]
