@@ -40,14 +40,26 @@ class Me(APIView):
 # api/v1/users
 class Users(APIView):
     def post(self, request): # ModelSerializer가 uniquness 보장해주기 때문에 pw에 대한 validation만 하면 됨
+        name = request.data.get('name')
+        email = request.data.get('email')
+        username = request.data.get('username')
         password = request.data.get('password')
-        if not password:
+        currency = request.data.get('currency')
+        gender = request.data.get('gender')
+        language = request.data.get('language')
+        if not password or not name or not email or not username or not currency or not gender or not language:
             raise ParseError
         serializer = serializers.PrivateUserSerializer(data=request.data) # 해당 serializer에는 pw 포함 X
         if serializer.is_valid():
             # user.password = password # 이렇게 하면 raw pw가 그대로 DB에 들어감
             user = serializer.save()
+            user.name = name
+            user.email = email
+            user.username = username
             user.set_password(password) # pw hash화
+            user.currency = currency
+            user.gender = gender
+            user.language = language
             user.save()
             serializer = serializers.PrivateUserSerializer(user)
             return Response(serializer.data)
@@ -94,7 +106,7 @@ class LogIn(APIView):
             login(request, user) # user 정보가 담긴 session 생성, 사용자에게 cookie를 보내줌
             return Response({"ok": "Welcome!"})
         else:
-            return Response({"error": "wrong password"})
+            return Response({"error": "wrong password"}, status=status.HTTP_400_BAD_REQUEST, )
 
 
 # api/v1/users/log-out
