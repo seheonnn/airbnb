@@ -1,5 +1,4 @@
 import datetime
-import time
 
 from django.conf import settings
 from django.db import transaction
@@ -104,7 +103,7 @@ class Rooms(APIView):
                     for amenity_pk in amenities:
                         amenity = Amenity.objects.get(pk=amenity_pk)
                         room.amenities.add(amenity)  # amenity를 찾으면 해당 room에 하나씩 추가. ManyToMany이기 때문
-                    serializer = RoomDetailSerializer(room)
+                    serializer = RoomDetailSerializer(room, context={"request": request},)
                     return Response(serializer.data)
             except Exception:
                 raise ParseError("Amenity not found")
@@ -125,7 +124,6 @@ class RoomDetail(APIView):
             raise NotFound
 
     def get(self, request, pk):
-        time.sleep(10)
         room = self.get_object(pk)
         serializer = RoomDetailSerializer(room, context={'request':request}) # context= 를 통해 데이터를 직접 넘길 수도 있음
         return Response(serializer.data)
