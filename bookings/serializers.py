@@ -80,10 +80,11 @@ class CheckMyBookingSerializer(serializers.ModelSerializer):
         model = Booking
         fields = (
             "id",
+            "user",
             "room",
             "kind",
             "check_in",
             "check_out",
             "guests",
-            "not_canceled",
+            "canceled",
         )
