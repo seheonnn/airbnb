@@ -1,5 +1,8 @@
 from django.utils import timezone
 from rest_framework import serializers
+
+from rooms.serializers import TinyRoomSerializer
+from users.serializers import TinyUserSerializer
 from .models import Booking
 
 class CreateRoomBookingSerializer(serializers.ModelSerializer):
@@ -28,11 +31,12 @@ class CreateRoomBookingSerializer(serializers.ModelSerializer):
 
     # data는 딕셔너리임
     def validate(self, data):
+        room = self.context["room"]
         if data['check_out'] <= data['check_in']:
             raise serializers.ValidationError("Check in should be smaller than check out.")
         # ********************
         if Booking.objects.filter(
-            room=self.context['room'],
+            room=room,
             check_in__lte=data["check_out"],
             check_out__gte=data["check_in"],
         ).exists():
@@ -50,6 +54,7 @@ class PublicBookingSerializer(serializers.ModelSerializer):
             "check_out",
             "experience_time",
             "guests",
+            "user",
         )
 
 # 집 주인이 보는 booking
@@ -68,3 +73,17 @@ class CreateExperienceBookingSerializer(serializers.ModelSerializer):
         if now > value:
             raise serializers.ValidationError("Can't book in the past!")
         return value
+class CheckMyBookingSerializer(serializers.ModelSerializer):
+    user = TinyUserSerializer()
+    room = TinyRoomSerializer()
+    class Meta:
+        model = Booking
+        fields = (
+            "id",
+            "room",
+            "kind",
+            "check_in",
+            "check_out",
+            "guests",
+            "not_canceled",
+        )

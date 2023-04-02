@@ -105,7 +105,7 @@ class Rooms(APIView):
                         room.amenities.add(amenity)  # amenity를 찾으면 해당 room에 하나씩 추가. ManyToMany이기 때문
                     serializer = RoomDetailSerializer(room, context={"request": request},)
                     return Response(serializer.data)
-            except Exception:
+            except Exception as e:
                 raise ParseError("Amenity not found")
         else:
             return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
@@ -157,10 +157,14 @@ class RoomDetail(APIView):
                         for amenity_pk in amenities:
                             amenity = Amenity.objects.get(pk=amenity_pk)
                             updated_room.amenities.add(amenity)  # amenity를 찾으면 해당 room에 하나씩 추가. ManyToMany이기 때문
-                    serializer = RoomDetailSerializer(updated_room)
+                    serializer = RoomDetailSerializer(updated_room, context={"request": request})
                     return Response(serializer.data)
-            except Exception:
-                raise ParseError("Amenity not found")
+            except Exception as e:
+                # print(e)
+                # raise ParseError("Amenity not found")
+                import traceback
+                traceback.print_exc()
+                raise ParseError(str(e))
         else:
             return Response(serializer.errors)
 
@@ -317,19 +321,21 @@ class RoomBookings(APIView):
             return Response(serializer.data)
         else:
             return Response(serializer.errors)
-
-# api/v1/rooms/1/bookings/1
-class RoomBookingDelete(APIView):
-    def get_object(self, booking_pk):
+class RoomBookingCheck(APIView):
+    def get_object(self, pk):
         try:
-            return Booking.objects.get(pk=booking_pk)
-        except Booking.DoesNotExist:
+            return Room.objects.get(pk=pk)
+        except Room.DoesNotExist:
             raise NotFound
-    def delete(self, request, pk, booking_pk):
-        room = Room.objects.get(pk=pk)
-        booking = self.get_object(booking_pk)
-        # if booking.user != request.user and booking.room == room:
-        if booking.user != request.user or booking.room != room:
-            raise PermissionDenied
-        booking.delete()
-        return Response(status=HTTP_204_NO_CONTENT)
+    def get(self, request, pk):
+        room = self.get_object(pk)
+        check_out = request.query_params.get('check_out')
+        check_in = request.query_params.get('check_in')
+        exists=Booking.objects.filter(
+            room=room,
+            check_in__lte=check_out,
+            check_out__gte=check_in,
+        ).exists()
+        if exists:
+            return Response({"ok": False}) # 예약 불가
+        return Response({"ok": True}) # 예약 가능

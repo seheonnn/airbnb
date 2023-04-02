@@ -35,6 +35,7 @@ urlpatterns = [
     path("api/v1/medias/", include("medias.urls")),
     path("api/v1/wishlists/", include("wishlists.urls")),
     path("api/v1/users/", include("users.urls")),
+    path("api/v1/bookings/", include("bookings.urls")),
 
     # GraphQL
     path("graphql", GraphQLView.as_view(schema=schema)),

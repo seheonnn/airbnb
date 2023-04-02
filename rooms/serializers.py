@@ -86,3 +86,10 @@ class RoomListSerializer(serializers.ModelSerializer): # 방에 대한 작은 �
         request = self.context["request"]  # context= 를 통해 넘어온 데이터 사용
         return room.owner == request.user
 
+class TinyRoomSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Room
+        fields = (
+            "name",
+            "price",
+        )
