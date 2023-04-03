@@ -12,6 +12,7 @@ class BookingAdmin(admin.ModelAdmin):
         "check_out",
         "experience_time",
         "guests",
+        "canceled",
     )
 
     list_filter = (

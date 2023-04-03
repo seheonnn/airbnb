@@ -33,7 +33,7 @@ class RoomBookingDelete(APIView):
     # not_canceled 변수를 이용하여 예약 삭제
     def post(self, request, pk):
         booking = self.get_object(pk)
-        if booking.user != request.user:
+        if booking.user != request.user or booking.room.owner != request.user:
             raise PermissionDenied
         serializer = CheckMyBookingSerializer(booking, data={"canceled":True}, partial=True)
         if serializer.is_valid():

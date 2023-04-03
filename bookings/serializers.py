@@ -45,6 +45,8 @@ class CreateRoomBookingSerializer(serializers.ModelSerializer):
 
 # 모두가 보는 booking
 class PublicBookingSerializer(serializers.ModelSerializer):
+    user = TinyUserSerializer()
+    room = TinyRoomSerializer()
 
     class Meta:
         model = Booking
@@ -55,6 +57,7 @@ class PublicBookingSerializer(serializers.ModelSerializer):
             "experience_time",
             "guests",
             "user",
+            "room",
         )
 
 # 집 주인이 보는 booking

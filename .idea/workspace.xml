@@ -6,7 +6,45 @@
   <component name="ChangeListManager">
     <list default="true" id="3518b4f9-0d2c-4833-8389-1ec548f71b41" name="변경" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookings/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookings/migrations/0001_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookings/migrations/0002_alter_booking_experience_alter_booking_room.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookings/migrations/0003_booking_not_canceled.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookings/migrations/0004_remove_booking_not_canceled_booking_canceled.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/bookings/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookings/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/bookings/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/categories/migrations/0001_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/categories/migrations/0002_alter_category_options.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/direct_messages/migrations/0001_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/direct_messages/migrations/0002_rename_rooms_message_room.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/direct_messages/migrations/0003_alter_chattingroom_users_alter_message_room_and_more.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiences/migrations/0001_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiences/migrations/0002_experience_categories_alter_perk_details_and_more.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiences/migrations/0003_rename_categories_experience_category.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiences/migrations/0004_alter_experience_category_alter_experience_host_and_more.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/medias/migrations/0001_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/medias/migrations/0002_alter_photo_experience_alter_photo_room_and_more.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/medias/migrations/0003_alter_photo_file_alter_video_file.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reviews/migrations/0001_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reviews/migrations/0002_alter_review_experience_alter_review_room_and_more.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reviews/migrations/0003_alter_review_room.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reviews/migrations/0004_alter_review_room.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/migrations/0001_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/migrations/0002_room_name_alter_amenity_description.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/migrations/0003_alter_amenity_options.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/migrations/0004_room_categories.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/migrations/0005_rename_categories_room_category.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rooms/migrations/0006_alter_room_amenities_alter_room_category_and_more.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/naverclova이용 얼굴인식.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/naverclova이용 얼굴인식_BmV1H1W.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/naverclova이용 얼굴인식_usMJVm2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/opencv 인스타그램 이미지 비교.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/migrations/0001_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/migrations/0002_alter_user_avatar.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/migrations/0003_alter_user_avatar.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/wishlists/migrations/0001_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/wishlists/migrations/0002_rename_users_wishlist_user.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/wishlists/migrations/0003_alter_wishlist_experiences_alter_wishlist_rooms_and_more.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -122,7 +160,8 @@
       <workItem from="1680068738027" duration="5226000" />
       <workItem from="1680133269824" duration="7018000" />
       <workItem from="1680314994347" duration="5600000" />
-      <workItem from="1680409702310" duration="2915000" />
+      <workItem from="1680409702310" duration="4324000" />
+      <workItem from="1680502735659" duration="4523000" />
     </task>
     <servers />
   </component>
