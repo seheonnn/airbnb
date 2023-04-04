@@ -58,6 +58,7 @@ class PublicBookingSerializer(serializers.ModelSerializer):
             "guests",
             "user",
             "room",
+            "canceled",
         )
 
 # 집 주인이 보는 booking
