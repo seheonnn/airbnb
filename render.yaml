@@ -10,7 +10,7 @@ services:
     env: python
     region: singapore #
     buildCommand: "./build.sh"
-    startCommand: "gunicorn mysite.wsgi:application" # python3 manage.py runserver 명령이 아닌 gunicorn 사용
+    startCommand: "gunicorn config.wsgi:application" # python3 manage.py runserver 명령이 아닌 gunicorn 사용
     envVars:
       - key: DATABASE_URL
         fromDatabase:
