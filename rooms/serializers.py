@@ -78,6 +78,7 @@ class RoomListSerializer(serializers.ModelSerializer): # 방에 대한 작은 �
             "rating",
             "is_owner",
             "photos",
+            "like",
         )
     def get_rating(self, room):
         return room.rating()
