@@ -37,7 +37,11 @@ SECRET_KEY = env("SECRET_KEY")
 # render를 이용한 배포
 DEBUG = 'RENDER' not in os.environ
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "localhost",
+    "https://airbnbclone-1apl.onrender.com",
+    # 구매한 도메인 추가
+]
 # render가 외부로 노출시키는 url
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:

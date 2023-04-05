@@ -1,12 +1,12 @@
 databases:
-  - name: airbnbclone
+  - name: airbnbclone-db
     databaseName: airbnbclone
     user: airbnbclone
     region: singapore # render의 아시아 서버는 singpore에 있음
 
 services:
   - type: web
-    name: airbnbclone
+    name: airbnbclone-backend
     env: python
     region: singapore #
     buildCommand: "./build.sh"
