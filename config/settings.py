@@ -194,12 +194,15 @@ REST_FRAMEWORK = {
     ]
 }
 
-# CORS_ALLOWED_ORIGINS = ["http://localhost:3000"]
-CORS_ALLOWED_ORIGINS = ["http://127.0.0.1:3000"]
+if DEBUG:
+    # CORS_ALLOWED_ORIGINS = ["http://localhost:3000"]
+    CORS_ALLOWED_ORIGINS = ["http://127.0.0.1:3000"]
+    CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1:3000"]
+else: # 구매한 domain이 있다면 해당 domain을 넣어야 함.
+    CORS_ALLOWED_ORIGINS = ["https://airbnb-frontend-ri36.onrender.com"]
+    CSRF_TRUSTED_ORIGINS = ["http://https://airbnb-frontend-ri36.onrender.com.0.0.1:3000"]
 
 CORS_ALLOW_CREDENTIALS = True
-
-CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1:3000"]
 
 GH_SECRET = env("GH_SECRET")
 
