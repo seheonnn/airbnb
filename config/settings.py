@@ -34,14 +34,12 @@ SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # 배포할 때는 DEBUG 끄기
+DEBUG = True
 # render를 이용한 배포
-DEBUG = 'RENDER' not in os.environ
+# DEBUG = 'RENDER' not in os.environ
 
-ALLOWED_HOSTS = [
-    "localhost",
-    "https://airbnbclone-1apl.onrender.com",
-    # 구매한 도메인 추가
-]
+
+ALLOWED_HOSTS = []
 # render가 외부로 노출시키는 url
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
