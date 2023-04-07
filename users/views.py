@@ -12,7 +12,6 @@ from reviews.models import Review
 from reviews.serializers import UserReviewSerializer
 from . import serializers
 from .models import User
-from django.conf import settings
 
 import jwt
 
@@ -223,6 +222,42 @@ class KakaoLogIn(APIView):
                     username=profile.get("nickname"),
                     name=profile.get("nickname"),
                     avatar=profile.get('profile_image_url')
+                )
+                user.set_unusable_password()
+                user.save()
+                login(request, user)
+                return Response(status=status.HTTP_200_OK)
+        except Exception:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class NaverLogIn(APIView):
+    def post(self, request):
+        try:
+            code = request.data.get("code")
+            state = request.data.get("state")
+            from config import settings
+            access_token = requests.post(
+                f"https://nid.naver.com/oauth2.0/token?client_id={settings.N_ClientId}&client_secret={settings.N_SECRET}&grant_type=authorization_code&state={state}&code={code}"
+            )
+            print(access_token.json())
+            access_token = access_token.json().get("access_token")
+            user_data = requests.get(
+                "https://openapi.naver.com/v1/nid/me",
+                headers={"Authorization": f"bearer {access_token}"},
+            )
+            user_data = user_data.json().get("response")
+            naver_account = user_data.get("email")
+            try:
+                user = User.objects.get(email=naver_account)
+                login(request, user)
+                return Response(status=status.HTTP_200_OK)
+            except User.DoesNotExist:
+                user = User.objects.create(
+                    email=naver_account,
+                    username=user_data.get("name"),
+                    name=user_data.get("name"),
+                    avatar=user_data.get("profile_image"),
                 )
                 user.set_unusable_password()
                 user.save()

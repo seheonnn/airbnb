@@ -27,5 +27,6 @@ urlpatterns = [
 
     path("github", views.GithubLogIn.as_view()),
     path("kakao", views.KakaoLogIn.as_view()),
+    path("naver", views.NaverLogIn.as_view()),
 
 ]

@@ -14,7 +14,7 @@ class Wishlist(CommonModel):
     experiences = models.ManyToManyField(
         "experiences.Experience",
         related_name="wishlists",
-        null=True,
+        # null=True,
         blank=True,
     )
     user = models.ForeignKey(
