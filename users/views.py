@@ -12,6 +12,7 @@ from reviews.models import Review
 from reviews.serializers import UserReviewSerializer
 from . import serializers
 from .models import User
+from config import settings
 
 import jwt
 
@@ -236,7 +237,6 @@ class NaverLogIn(APIView):
         try:
             code = request.data.get("code")
             state = request.data.get("state")
-            from config import settings
             access_token = requests.post(
                 f"https://nid.naver.com/oauth2.0/token?client_id={settings.N_ClientId}&client_secret={settings.N_SECRET}&grant_type=authorization_code&state={state}&code={code}"
             )
@@ -258,6 +258,41 @@ class NaverLogIn(APIView):
                     username=user_data.get("name"),
                     name=user_data.get("name"),
                     avatar=user_data.get("profile_image"),
+                )
+                user.set_unusable_password()
+                user.save()
+                login(request, user)
+                return Response(status=status.HTTP_200_OK)
+        except Exception:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+class GoogleLogIn(APIView):
+    def post(self, request):
+        try:
+            code = request.data.get("code")
+            data = {
+                'code': code,
+                'client_id': settings.G_ClientId,
+                'client_secret': settings.G_SECRET,
+                'redirect_uri': "http://127.0.0.1:3000/social/google",
+                'grant_type': 'authorization_code',
+            }
+            access_token = requests.post(
+                f"https://oauth2.googleapis.com/token",data=data
+            )
+            access_token = access_token.json().get("access_token")
+            user_data = requests.get("https://www.googleapis.com/userinfo/v2/me",
+                                     headers={"Authorization": f"Bearer {access_token}", "Accept": "application/json"}, )
+            user_data = user_data.json()
+            try:
+                user = User.objects.get(email=user_data.get("email"))
+                login(request, user)
+                return Response(status=status.HTTP_200_OK)
+            except User.DoesNotExist:
+                user = User.objects.create(
+                    email=user_data.get("email"),
+                    username=user_data.get("name"),
+                    name=user_data.get("name"),
+                    avatar=user_data.get("picture"),
                 )
                 user.set_unusable_password()
                 user.save()

@@ -210,5 +210,9 @@ GH_SECRET = env("GH_SECRET")
 
 CF_ID = env("CF_ID")
 CF_TOKEN = env("CF_TOKEN")
+
 N_SECRET = env("N_SECRET")
 N_ClientId = env("N_ClientId")
+
+G_SECRET=env("G_SECRET")
+G_ClientId=env("G_ClientId")
